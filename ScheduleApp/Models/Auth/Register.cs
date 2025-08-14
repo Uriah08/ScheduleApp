@@ -1,4 +1,6 @@
-﻿namespace ScheduleApp.Models.Auth
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace ScheduleApp.Models.Auth
 {
     public class Register
     {
@@ -8,5 +10,25 @@
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string? Phone { get; set; }
+    }
+
+    public class ChangePassword
+    {
+        public string CurrentPassword { get; set; } = string.Empty;
+        public string NewPassword { get; set; } = string.Empty;
+    }
+
+    public class UpdateProfile
+    {
+        public string? Username { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? Phone { get; set; }
+    }
+
+    public class ApplicationUser : IdentityUser
+    {
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
     }
 }

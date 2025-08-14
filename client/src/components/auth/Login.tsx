@@ -15,8 +15,11 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Link } from 'react-router-dom'
+import { useLoginUserMutation } from '@/store/api'
 
 const Login = () => {
+
+    const [loginUser, { isLoading }] = useLoginUserMutation();
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -26,8 +29,16 @@ const Login = () => {
         },
     })
 
-    function onSubmit(values: z.infer<typeof loginSchema>) {
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof loginSchema>) {
+        try {
+            console.log(values);
+            
+            const response = await loginUser(values).unwrap();
+            console.log(response);
+            
+        } catch (error) {
+            console.log(error);
+        }
     }
   
     return (
@@ -64,7 +75,9 @@ const Login = () => {
                         )}
                         />
                         <div className='flex flex-col w-full'>
-                            <Button className='bg-[#1a6b15] w-full hover:bg-[#145811] cursor-pointer mt-5'>Sign in</Button>
+                            <Button className='bg-[#1a6b15] w-full hover:bg-[#145811] cursor-pointer mt-5'>
+                                {isLoading ? 'Signing in...' : 'Sign in'}
+                            </Button>
                             <Link to="/register" className='text-xs text-end mt-1 cursor-pointer hover:underline'>Don&apos;t have an account?</Link>
                         </div>
                     </form>
